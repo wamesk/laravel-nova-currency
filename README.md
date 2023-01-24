@@ -21,6 +21,17 @@ php artisan vendor:publish --provider="Wame\LaravelNovaCurrency\PackageServicePr
 php artisan migrate
 ```
 
+```bash
+php artisan db:seed --class=CurrencySeeder
+```
+
+Add Policy to `./app/Providers/AuthServiceProvider.php`
+```php
+protected $policies = [
+    'App\Models\Currency' => 'App\Policies\CurrencyPolicy',
+];
+```
+
 ## Usage
 
 ```php

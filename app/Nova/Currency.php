@@ -70,7 +70,7 @@ class Currency extends BaseResource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -85,6 +85,7 @@ class Currency extends BaseResource
                         ->sortable()
                         ->filterable()
                         ->rules('required')
+                        ->readonly()
                         ->showOnPreview(),
 
                     Text::make(__('currency.field.symbol'), 'symbol')
@@ -110,7 +111,7 @@ class Currency extends BaseResource
 
                     Select::make(__('currency.field.symbol_place'), 'symbol_place')
                         ->help(__('currency.field.symbol_place.help'))
-                        ->options(Translator::arrayValue(config('wame.currency.symbol_place')))
+                        ->options(Translator::arrayValue(config('wame-currency.symbol_place')))
                         ->rules('required')
                         ->onlyOnForms(),
 
@@ -123,13 +124,13 @@ class Currency extends BaseResource
 
                     Select::make(__('currency.field.decimal_separator'), 'decimal_separator')
                         ->help(__('currency.field.decimal_separator.help'))
-                        ->options(Translator::arrayValue(config('wame.currency.decimal_separator')))
+                        ->options(Translator::arrayValue(config('wame-currency.decimal_separator')))
                         ->rules('required')
                         ->onlyOnForms(),
 
                     Select::make(__('currency.field.thousands_separator'), 'thousands_separator')
                         ->help(__('currency.field.thousands_separator.help'))
-                        ->options(Translator::arrayValue(config('wame.currency.thousands_separator')))
+                        ->options(Translator::arrayValue(config('wame-currency.thousands_separator')))
                         ->rules('required')
                         ->onlyOnForms(),
 
@@ -158,7 +159,7 @@ class Currency extends BaseResource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param NovaRequest $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -171,7 +172,7 @@ class Currency extends BaseResource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param NovaRequest $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -182,7 +183,7 @@ class Currency extends BaseResource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param NovaRequest $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -193,7 +194,7 @@ class Currency extends BaseResource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param NovaRequest $request
      * @return array
      */
     public function actions(NovaRequest $request)

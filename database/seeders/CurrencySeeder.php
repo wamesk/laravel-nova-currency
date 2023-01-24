@@ -55,6 +55,8 @@ class CurrencySeeder extends Seeder
         ];
 
         foreach ($items as $item) {
+            if ($item['code'] === 'EUR') $item['coefficient'] = 1;
+
             Currency::updateOrCreate(['code' => $item['code']], $item);
         }
     }

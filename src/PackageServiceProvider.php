@@ -35,8 +35,11 @@ class PackageServiceProvider extends ServiceProvider
             // Export config
             $this->publishes([__DIR__ . '/../config/wame-currency.php' => config_path('wame-currency.php')], ['config', 'wame', 'currency']);
 
-            // Export Nova Resource
+            // Export Nova resource
             $this->publishes([__DIR__ . '/../app/Nova/Currency.php' => app_path('Nova/Currency.php')], ['nova', 'wame', 'currency']);
+
+            // Export policy
+            $this->publishes([__DIR__ . '/../app/Policies/CurrencyPolicy.php' => app_path('Policies/CurrencyPolicy.php')], ['policy', 'wame', 'currency']);
 
             // Export migration
             $this->publishes([__DIR__ . '/../database/migrations/2023_01_23_083015_create_currencies_table.php' => database_path('migrations/2023_01_23_083015_create_currencies_table.php')], ['migrations', 'wame', 'currency']);

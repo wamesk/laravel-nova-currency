@@ -1,6 +1,6 @@
 <?php
 
-namespace Wame\Controllers;
+namespace Wame\LaravelNovaCurrency\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
@@ -22,7 +22,7 @@ class CurrencyController extends Controller
             Currency::where(['code' => $code])->update(['coefficient' => $coefficient, 'updated_at' => $date]);
         }
 
-        if ($redirect) return redirect()->to(config('nova.path') . '/resources/currencies');
+        if ($redirect) return redirect()->to(config('nova.path') . 'resources/currencies');
     }
 
 }
