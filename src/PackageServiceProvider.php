@@ -42,7 +42,7 @@ class PackageServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../app/Policies/CurrencyPolicy.php' => app_path('Policies/CurrencyPolicy.php')], ['policy', 'wame', 'currency']);
 
             // Export migration
-            $this->publishes([__DIR__ . '/../database/migrations/2023_01_23_083015_create_currencies_table.php' => database_path('migrations/2023_01_23_083015_create_currencies_table.php')], ['migrations', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../database/migrations/2022_08_17_104805_create_countries_table.php' => database_path('migrations/2022_08_17_104805_create_countries_table.php')], ['migrations', 'wame', 'currency']);
 
             // Export seeder
             $this->publishes([__DIR__ . '/../database/seeders/CurrencySeeder.php' => database_path('seeders/CurrencySeeder.php')], ['seeders', 'wame', 'currency']);
