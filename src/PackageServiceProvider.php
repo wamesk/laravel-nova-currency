@@ -50,12 +50,15 @@ class PackageServiceProvider extends ServiceProvider
             // Export lang
             $this->publishes([__DIR__ . '/../resources/lang/sk/currency.php' => resource_path('lang/sk/currency.php')], ['langs', 'wame', 'currency']);
 
-            // Schedule
+            // Add schedule
             $this->app->booted(function () {
                 $schedule = $this->app->make(Schedule::class);
                 $schedule->job(new CurrencyCoefficientUpdateJob())->weekdays()->dailyAt('16:15');
             });
         }
+            
+        // Add route
+        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
     }
 
 
