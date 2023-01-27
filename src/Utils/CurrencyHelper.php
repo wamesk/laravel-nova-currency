@@ -25,7 +25,7 @@ class CurrencyHelper
             $decimals = $currency->decimals;
         }
 
-        $return .= number_format((float) str_replace(',', '.', $price), $decimals, $currency->dec_point, $currency->thousands_sep);
+        $return .= number_format((float) str_replace(',', '.', (string) $price), (int) $decimals, $currency->dec_point, $currency->thousands_sep);
 
         if (\App\Models\Currency::SYMBOL_PLACE_AFTER_PRICE === $currency->symbol_place) {
             $return .= ' ' . $currency->symbol;
