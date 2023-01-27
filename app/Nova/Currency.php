@@ -61,9 +61,9 @@ class Currency extends BaseResource
     {
         if (Strings::contains($request->path(), 'associatable/currency')) {
             $query->where('status', \App\Models\Currency::STATUS_ENABLED);
-        } else {
-            return $query;
         }
+
+        return $query;
     }
 
     /**
