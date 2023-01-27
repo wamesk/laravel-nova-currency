@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Wame\LaravelNovaCurrency\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Carbon\CarbonImmutable;
-
 
 class CurrencyController extends Controller
 {
@@ -16,13 +17,14 @@ class CurrencyController extends Controller
         $date = CarbonImmutable::now();
 
         foreach ($xml->Cube->Cube->Cube as $rate) {
-            $code = strval($rate['currency']);
-            $coefficient = strval($rate['rate']);
+            $code = (string) ($rate['currency']);
+            $coefficient = (string) ($rate['rate']);
 
             Currency::where(['code' => $code])->update(['coefficient' => $coefficient, 'updated_at' => $date]);
         }
 
-        if ($redirect) return redirect()->to(config('nova.path') . 'resources/currencies');
+        if ($redirect) {
+            return redirect()->to(config('nova.path') . 'resources/currencies');
+        }
     }
-
 }

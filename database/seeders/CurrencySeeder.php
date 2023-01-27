@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Currency;
 use Illuminate\Database\Seeder;
-
 
 /**
  * php artisan db:seed --class=CurrencySeeder
@@ -16,7 +17,7 @@ class CurrencySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $items = [
             ['code' => 'EUR', 'title' => 'Euro', 'symbol' => '€', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '1', 'thousands_separator' => '1', 'basic' => '1'],
@@ -51,14 +52,15 @@ class CurrencySeeder extends Seeder
             ['code' => 'PHP', 'title' => 'Peso', 'symbol' => '₱', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '1', 'basic' => '0'],
             ['code' => 'SGD', 'title' => 'Dollar', 'symbol' => '$', 'symbol_place' => '1', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '2', 'basic' => '0'],
             ['code' => 'THB', 'title' => 'Baht', 'symbol' => '฿', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '1', 'basic' => '0'],
-            ['code' => 'ZAR', 'title' => 'Rand', 'symbol' => 'R', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '1', 'basic' => '0']
+            ['code' => 'ZAR', 'title' => 'Rand', 'symbol' => 'R', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '1', 'basic' => '0'],
         ];
 
         foreach ($items as $item) {
-            if ($item['code'] === 'EUR') $item['coefficient'] = 1;
+            if ('EUR' === $item['code']) {
+                $item['coefficient'] = 1;
+            }
 
             Currency::updateOrCreate(['code' => $item['code']], $item);
         }
     }
-
 }

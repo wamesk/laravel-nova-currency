@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Wame\LaravelNovaCurrency\Nova;
 
 use InteractionDesignFoundation\HtmlCard\HtmlCard;
-
 
 class CurrencyImportCard
 {
@@ -23,5 +24,4 @@ class CurrencyImportCard
                 . '</a>'
                 . '</div>');
     }
-
 }

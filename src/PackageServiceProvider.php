@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Wame\LaravelNovaCurrency;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
 use Wame\LaravelNovaCurrency\Jobs\CurrencyCoefficientUpdateJob;
-use Wame\Utils\Helpers\File;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class PackageServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/wame-currency.php', 'wame-currency');
     }
@@ -25,52 +25,54 @@ class PackageServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             // Export model
             $model = app_path('Models/Currency.php');
-            if (!file_exists($model)) $this->createModel($model);
+            if (!file_exists($model)) {
+                $this->createModel($model);
+            }
 
             // Export config
             $this->publishes([__DIR__ . '/../config/wame-currency.php' => config_path('wame-currency.php')], ['config', 'wame', 'currency']);
 
             // Export Nova resource
-            $this->publishes([__DIR__ . '/../app/Nova/Currency.php' => app_path('Nova/Currency.php')], ['nova', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../app/Nova' => app_path('Nova')], ['nova', 'wame', 'currency']);
 
             // Export policy
-            $this->publishes([__DIR__ . '/../app/Policies/CurrencyPolicy.php' => app_path('Policies/CurrencyPolicy.php')], ['policy', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../app/Policies' => app_path('Policies')], ['policy', 'wame', 'currency']);
 
             // Export migration
-            $this->publishes([__DIR__ . '/../database/migrations/2022_08_17_083015_create_currencies_table.php' => database_path('migrations/2022_08_17_083015_create_currencies_table.php')], ['migrations', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], ['migrations', 'wame', 'currency']);
 
             // Export seeder
-            $this->publishes([__DIR__ . '/../database/seeders/CurrencySeeder.php' => database_path('seeders/CurrencySeeder.php')], ['seeders', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../database/seeders' => database_path('seeders')], ['seeders', 'wame', 'currency']);
 
             // Export lang
-            $this->publishes([__DIR__ . '/../resources/lang/sk/currency.php' => resource_path('lang/sk/currency.php')], ['langs', 'wame', 'currency']);
+            $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], ['langs', 'wame', 'currency']);
 
             // Add schedule
-            $this->app->booted(function () {
+            $this->app->booted(function (): void {
                 $schedule = $this->app->make(Schedule::class);
                 $schedule->job(new CurrencyCoefficientUpdateJob())->weekdays()->dailyAt('16:15');
             });
         }
-            
+
         // Add route
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
     }
 
 
-    private function createModel($model)
+    private function createModel($model): void
     {
-        $file = fopen($model, "w");
+        $file = fopen($model, 'w');
         $idType = config('wame-commands.id-type');
 
-        if ($idType === 'ulid') {
+        if ('ulid' === $idType) {
             $use = "use Illuminate\Database\Eloquent\Concerns\HasUlids;\n";
             $use2 = "    use HasUlids;\n";
-        } elseif ($idType === 'uuid') {
+        } elseif ('uuid' === $idType) {
             $use = "use Illuminate\Database\Eloquent\Concerns\HasUuids;\n";
             $use2 = "    use HasUuids;\n";
         } else {
@@ -96,5 +98,4 @@ class PackageServiceProvider extends ServiceProvider
         fwrite($file, implode('', $lines));
         fclose($file);
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 return [
     'symbol_place' => [
         \Wame\LaravelNovaCurrency\Models\Currency::SYMBOL_PLACE_BEFORE_PRICE => 'currency.field.symbol_place.before',

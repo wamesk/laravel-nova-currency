@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Nova;
 
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
@@ -14,7 +17,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Nette\Utils\Strings;
 use Wame\LaravelNovaCurrency\Nova\CurrencyImportCard;
 use Wame\Utils\Helpers\Translator;
-
 
 class Currency extends BaseResource
 {
@@ -38,26 +40,24 @@ class Currency extends BaseResource
      * @var array
      */
     public static $search = [
-        'id', 'code', 'symbol', 'title'
+        'id', 'code', 'symbol', 'title',
     ];
 
-
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function indexQuery(NovaRequest $request, $query): Builder
     {
         if ($request->viaRelationship) {
             return self::relatableQuery($request, $query);
-        } else {
-            if (empty($request->get('orderBy'))) {
-                $query->getQuery()->orders = [];
-                return $query->orderBy('code', 'asc');
-            }
-
-            return $query;
         }
+        if (empty($request->get('orderBy'))) {
+            $query->getQuery()->orders = [];
+
+            return $query->orderBy('code', 'asc');
+        }
+
+        return $query;
     }
 
-
-    public static function relatableQuery(NovaRequest $request, $query)
+    public static function relatableQuery(NovaRequest $request, $query): Builder
     {
         if (Strings::contains($request->path(), 'associatable/currency')) {
             $query->where('status', \App\Models\Currency::STATUS_ENABLED);
@@ -66,14 +66,13 @@ class Currency extends BaseResource
         }
     }
 
-
     /**
      * Get the fields displayed by the resource.
      *
      * @param NovaRequest $request
      * @return array
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Tabs::make(__('currency.detail', ['title' => $this->title ?: '']), [
@@ -162,10 +161,10 @@ class Currency extends BaseResource
      * @param NovaRequest $request
      * @return array
      */
-    public function cards(NovaRequest $request)
+    public function cards(NovaRequest $request): array
     {
         return [
-            CurrencyImportCard::make()
+            CurrencyImportCard::make(),
         ];
     }
 
@@ -175,7 +174,7 @@ class Currency extends BaseResource
      * @param NovaRequest $request
      * @return array
      */
-    public function filters(NovaRequest $request)
+    public function filters(NovaRequest $request): array
     {
         return [];
     }
@@ -186,7 +185,7 @@ class Currency extends BaseResource
      * @param NovaRequest $request
      * @return array
      */
-    public function lenses(NovaRequest $request)
+    public function lenses(NovaRequest $request): array
     {
         return [];
     }
@@ -197,7 +196,7 @@ class Currency extends BaseResource
      * @param NovaRequest $request
      * @return array
      */
-    public function actions(NovaRequest $request)
+    public function actions(NovaRequest $request): array
     {
         return [];
     }

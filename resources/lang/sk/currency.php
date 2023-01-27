@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 return [
     'label' => 'Meny',
     'plural' => 'Meny',
@@ -39,6 +41,6 @@ return [
     'field.status' => 'Aktívna',
     'field.status.help' => 'Zvoľte či je mena aktívna a bude ponúkaná v systéme.',
 
-    "with_tax" => "s DPH",
-    "without_tax" => "bez DPH"
+    'with_tax' => 's DPH',
+    'without_tax' => 'bez DPH',
 ];
