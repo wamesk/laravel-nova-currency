@@ -60,7 +60,7 @@ class PackageServiceProvider extends ServiceProvider
         }
 
         // Add route
-        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/Routes/web.php');
     }
 
 
