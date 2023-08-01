@@ -10,6 +10,14 @@ use Carbon\CarbonImmutable;
 
 class CurrencyController extends Controller
 {
+    /**
+     * @return Currency
+     */
+    private static function model(): Currency
+    {
+        return new Currency;
+    }
+
     public static function currencyCoefficientUpdate($redirect = true)
     {
         $xml = simplexml_load_file('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
@@ -26,5 +34,21 @@ class CurrencyController extends Controller
         if ($redirect) {
             return redirect()->to(config('nova.path') . 'resources/currencies');
         }
+    }
+
+    /**
+     * @return array
+     */
+    public static function getListForSelect(): array
+    {
+        $list = self::model()->where(['status' => Currency::STATUS_ENABLED])->orderBy('code');
+
+        $return = [];
+
+        foreach ($list->get() as $item) {
+            $return[$item->code] = $item->code . ' - ' . $item->title . ' [' . $item->symbol . ']';
+        }
+
+        return $return;
     }
 }
