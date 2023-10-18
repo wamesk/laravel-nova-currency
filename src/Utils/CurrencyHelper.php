@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Wame\LaravelNovaCurrency\Utils;
 
+use Wame\LaravelNovaCurrency\Models\Currency;
+
 class CurrencyHelper
 {
     public static function format($price, $currency, $decimals = null)
@@ -25,7 +27,10 @@ class CurrencyHelper
             $decimals = $currency->decimals;
         }
 
-        $return .= number_format((float) str_replace(',', '.', (string) $price), (int) $decimals, $currency->dec_point, $currency->thousands_sep);
+        $decPoint = $currency->dec_point == Currency::DECIMAL_SEPARATOR_COMMA ? ',' : '.';
+        $thousandsSep = $currency->thousands_sep == Currency::THOUSANDS_SEPARATOR_DOT ? '.' : ' ';
+
+        $return .= number_format((float) str_replace(',', '.', (string) $price), (int) $decimals, $decPoint, $thousandsSep);
 
         if (\App\Models\Currency::SYMBOL_PLACE_AFTER_PRICE === $currency->symbol_place) {
             $return .= ' ' . $currency->symbol;

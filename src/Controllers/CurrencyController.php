@@ -7,6 +7,8 @@ namespace Wame\LaravelNovaCurrency\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Carbon\CarbonImmutable;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class CurrencyController extends Controller
 {
@@ -46,9 +48,33 @@ class CurrencyController extends Controller
         $return = [];
 
         foreach ($list->get() as $item) {
-            $return[$item->code] = $item->code . ' - ' . $item->title . ' [' . $item->symbol . ']';
+            $return[$item->code] = $item->code . ' - ' . $item->title . ' (' . $item->symbol . ')';
         }
+
+        natcasesort($return);
 
         return $return;
     }
+
+    /**
+     * Helper for display using
+     *
+     * @param NovaRequest $request
+     * @param Currency $model
+     *
+     * @return string|null
+     */
+    public static function displayUsing($request, $model): ?string
+    {
+        if (!$model->currency_code) {
+            return null;
+        } elseif ($request instanceof ResourceIndexRequest) {
+            return $model->currency_code;
+        } else {
+            $currency = $model->currency;
+
+            return $model->currency_code . ' - ' . $currency->title . ' (' . $currency->symbol . ')';
+        }
+    }
+
 }

@@ -35,9 +35,20 @@ protected $policies = [
 ## Usage
 
 ```php
-BelongsTo::make(__('customer.field.currency'), 'currency', Currency::class)
+Select::make(__('customer.field.currency'), 'currency_code')
     ->help(__('customer.field.currency.help'))
-    ->withoutTrashed()
+    ->options(fn () => CurrencyController::getListForSelect())
+    ->searchable()
+    ->required()
+    ->rules('required')
+    ->onlyOnForms(),
+
+BelongsTo::make(__('customer.field.currency'), 'currency', Currency::class)
+    ->displayUsing(fn () => CurrencyController::displayUsing($request, $this))
+    ->sortable()
+    ->filterable()
+    ->showOnPreview()
+    ->exceptOnForms(),
 ```
 
 ## Updating the exchange rates
