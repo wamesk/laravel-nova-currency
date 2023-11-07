@@ -12,6 +12,8 @@ class CurrencyHelper
     {
         if (is_numeric($currency)) {
             $currency = \App\Models\Currency::find($currency);
+        } elseif (is_string($currency)) {
+            $currency = \App\Models\Currency::where('code', $currency)->first();
         }
         if (!$currency) {
             $currency = \App\Models\Currency::where(['basic' => \App\Models\Currency::BASIC_ENABLED])->first();
