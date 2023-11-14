@@ -35,7 +35,7 @@ return new class () extends Migration {
             $table->unsignedFloat('coefficient', null, null)->default(0);
             $table->boolean('basic')->default(Currency::BASIC_DISABLED);
             $table->boolean('status')->default(Currency::STATUS_ENABLED);
-            $table->timestamps();
+            $table->datetimes();
 
             $table->unique('code');
             $table->index('symbol');
