@@ -41,9 +41,25 @@ class CurrencyHelper
         return $return;
     }
 
-
     public static function fillUsing($request, $model, $attribute, $requestAttribute): void
     {
         $model->{$attribute} = str_replace(',', '.', $request->input($attribute));
     }
+
+    public static function exchange($price, $from, $to)
+    {
+        if ($from == $to) {
+            return $price;
+        }
+
+        if ($from != 'EUR') {
+            $fromCurrency = Currency::where('code', $from)->select('coefficient')->first();
+            $price = $price * $fromCurrency->coefficient;
+        }
+
+        $toCurrency = Currency::where('code', $to)->select('coefficient')->first();
+
+        return $price * $toCurrency->coefficient;
+    }
+
 }
