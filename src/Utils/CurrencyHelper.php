@@ -4,24 +4,28 @@ declare(strict_types = 1);
 
 namespace Wame\LaravelNovaCurrency\Utils;
 
+use Wame\LaravelNovaCurrency\Enums\CurrencyBasicEnum;
+use Wame\LaravelNovaCurrency\Enums\DecimalSeparatorEnum;
+use Wame\LaravelNovaCurrency\Enums\SymbolPlacePriceEnum;
+use Wame\LaravelNovaCurrency\Enums\ThousandsSeparatorEnum;
 use Wame\LaravelNovaCurrency\Models\Currency;
 
 class CurrencyHelper
 {
-    public static function format($price, $currency, $decimals = null)
+    public static function format($price, $currency, $decimals = null): string
     {
         if (is_numeric($currency)) {
-            $currency = \App\Models\Currency::find($currency);
+            $currency = \Wame\LaravelNovaCurrency\Models\Currency::find($currency);
         } elseif (is_string($currency)) {
-            $currency = \App\Models\Currency::where('code', $currency)->first();
+            $currency = \Wame\LaravelNovaCurrency\Models\Currency::whereCode($currency)->first();
         }
         if (!$currency) {
-            $currency = \App\Models\Currency::where(['basic' => \App\Models\Currency::BASIC_ENABLED])->first();
+            $currency = \Wame\LaravelNovaCurrency\Models\Currency::whereBasic([CurrencyBasicEnum::ENABLED->value])->first();
         }
 
         $return = '';
 
-        if (\App\Models\Currency::SYMBOL_PLACE_BEFORE_PRICE === $currency->symbol_place) {
+        if (SymbolPlacePriceEnum::BEFORE->value === $currency->symbol_place) {
             $return .= $currency->symbol . ' ';
         }
 
@@ -29,12 +33,12 @@ class CurrencyHelper
             $decimals = $currency->decimals;
         }
 
-        $decPoint = $currency->dec_point == Currency::DECIMAL_SEPARATOR_COMMA ? ',' : '.';
-        $thousandsSep = $currency->thousands_sep == Currency::THOUSANDS_SEPARATOR_DOT ? '.' : ' ';
+        $decPoint = $currency->dec_point == DecimalSeparatorEnum::COMMA->value ? ',' : '.';
+        $thousandsSep = $currency->thousands_sep == ThousandsSeparatorEnum::DOT->value ? '.' : ' ';
 
         $return .= number_format((float) str_replace(',', '.', (string) $price), (int) $decimals, $decPoint, $thousandsSep);
 
-        if (\App\Models\Currency::SYMBOL_PLACE_AFTER_PRICE === $currency->symbol_place) {
+        if (SymbolPlacePriceEnum::AFTER->value === $currency->symbol_place) {
             $return .= ' ' . $currency->symbol;
         }
 

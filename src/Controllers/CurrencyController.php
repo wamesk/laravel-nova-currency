@@ -5,7 +5,9 @@ declare(strict_types = 1);
 namespace Wame\LaravelNovaCurrency\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Currency;
+use Illuminate\Support\Facades\Storage;
+use Wame\LaravelNovaCurrency\Enums\CurrencyStatusEnum;
+use Wame\LaravelNovaCurrency\Models\Currency;
 use Carbon\CarbonImmutable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
@@ -26,15 +28,39 @@ class CurrencyController extends Controller
 
         $date = CarbonImmutable::now();
 
+        $data = [];
         foreach ($xml->Cube->Cube->Cube as $rate) {
-            $code = (string) ($rate['currency']);
-            $coefficient = (string) ($rate['rate']);
-
-            Currency::where(['code' => $code])->update(['coefficient' => $coefficient, 'updated_at' => $date]);
+            $data[((string)($rate['currency']))] = ((string)($rate['rate']));
         }
 
+        /** @var Currency $currencyModel */
+        $currencyModel = resolve(Currency::class);
+        $currencies = $currencyModel->all();
+
+        $keys = array_keys($currencyModel->getSchema());
+
+        $newCurrencies = [array_merge($keys, ['updated_at'])];
+        foreach ($currencies as $currency) {
+            $newCurrency = [];
+            foreach ($keys as $key) {
+                $newCurrency[$key] = $currency->$key ?? null;
+            }
+            $newCurrency['coefficient'] = $data[$currency->id] ?? null;
+            if ('EUR' === $newCurrency['id']) {
+                $newCurrency['coefficient'] = 1.0;
+            }
+            $newCurrency['updated_at'] = now()->format('Y-m-d H:i:s');
+            $newCurrencies[] = $newCurrency;
+        }
+
+        Storage::disk('local')->put($currencyModel->fileName,
+            implode("\n", array_map(function ($row) {
+                return implode(',', $row);
+            }, $newCurrencies)),
+        );
+
         if ($redirect) {
-            return redirect()->to(config('nova.path') . 'resources/currencies');
+            return redirect()->back();
         }
     }
 
@@ -43,12 +69,12 @@ class CurrencyController extends Controller
      */
     public static function getListForSelect(): array
     {
-        $list = self::model()->where(['status' => Currency::STATUS_ENABLED])->orderBy('code');
+        $list = self::model()->where(['status' => CurrencyStatusEnum::ENABLED->value])->orderBy('id');
 
         $return = [];
 
         foreach ($list->get() as $item) {
-            $return[$item->code] = $item->code . ' - ' . $item->title . ' (' . $item->symbol . ')';
+            $return[$item->id] = $item->id . ' - ' . $item->title . ' (' . $item->symbol . ')';
         }
 
         natcasesort($return);

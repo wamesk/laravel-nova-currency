@@ -2,7 +2,7 @@
 
 namespace Wame\LaravelNovaCurrency\Models;
 
-use App\Models\Currency;
+use Wame\LaravelNovaCurrency\Models\Currency;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait HasCurrency

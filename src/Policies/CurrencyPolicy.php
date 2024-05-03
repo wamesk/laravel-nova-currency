@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Policies;
+namespace Wame\LaravelNovaCurrency\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;

@@ -14,10 +14,6 @@ composer require wamesk/laravel-nova-currency
 ```
 
 ```bash
-php artisan vendor:publish --provider="Wame\LaravelNovaCurrency\PackageServiceProvider"
-```
-
-```bash
 php artisan migrate
 ```
 
@@ -26,24 +22,25 @@ php artisan db:seed --class=CurrencySeeder
 ```
 
 Add Policy to `./app/Providers/AuthServiceProvider.php`
+
 ```php
 protected $policies = [
-    'App\Models\Currency' => 'App\Policies\CurrencyPolicy',
+    'Wame\LaravelNovaCurrency\Models\Currency' => 'src\Policies\CurrencyPolicy',
 ];
 ```
 
 ## Usage
 
 ```php
-Select::make(__('customer.field.currency'), 'currency_code')
-    ->help(__('customer.field.currency.help'))
+Select::make(__('laravel-nova-currency::customer.field.currency'), 'currency_code')
+    ->help(__('laravel-nova-currency::customer.field.currency.help'))
     ->options(fn () => CurrencyController::getListForSelect())
     ->searchable()
     ->required()
     ->rules('required')
     ->onlyOnForms(),
 
-BelongsTo::make(__('customer.field.currency'), 'currency', Currency::class)
+BelongsTo::make(__('laravel-nova-currency::customer.field.currency'), 'currency', Currency::class)
     ->displayUsing(fn () => CurrencyController::displayUsing($request, $this))
     ->sortable()
     ->filterable()

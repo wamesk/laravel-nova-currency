@@ -18,7 +18,6 @@ class CurrencyCoefficientUpdateJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-
     /**
      * Execute the job.
      *
