@@ -21,6 +21,8 @@ class PackageServiceProvider extends ServiceProvider
         Nova::resources([
             \Wame\LaravelNovaCurrency\Nova\Currency::class
         ]);
+
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'laravel-nova-currency');
     }
 
     /**
