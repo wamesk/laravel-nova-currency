@@ -31,7 +31,10 @@
         "psr-4": {
             "Wame\\LaravelNovaCurrency\\": "src/",
             "Wame\\LaravelNovaCurrency\\Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "src/Utils/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
