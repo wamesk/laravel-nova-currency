@@ -1,7 +1,7 @@
 {
     "name": "wamesk/laravel-nova-currency",
     "description": "Laravel Nova 4 Currency field.",
-    "version": "2.0.1",
+    "version": "2.0.3",
     "keywords": [
         "laravel",
         "nova",
@@ -23,18 +23,16 @@
         }
     ],
     "require": {
-        "laravel/nova": "^4.0",
         "calebporzio/sushi": "^v2.5.2",
-        "interaction-design-foundation/nova-html-card": "^3.0"
+        "interaction-design-foundation/nova-html-card": "^3.0",
+        "laravel/nova": "^4.0",
+        "moneyphp/money": "^4.5"
     },
     "autoload": {
         "psr-4": {
             "Wame\\LaravelNovaCurrency\\": "src/",
             "Wame\\LaravelNovaCurrency\\Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "src/Utils/helpers.php"
-        ]
+        }
     },
     "extra": {
         "laravel": {

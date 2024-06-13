@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Sushi\Sushi;
 
 /**
- * 
- *
  * @property string|null $id
  * @property string|null $title
  * @property string|null $symbol
