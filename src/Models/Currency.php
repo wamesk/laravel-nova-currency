@@ -55,6 +55,7 @@ class Currency extends Model
         'id' => 'string',
         'title' => 'string',
         'symbol' => 'string',
+        'locale' => 'string',
         'symbol_place' => 'string',
         'decimals' => 'integer',
         'decimal_separator' => 'string',
