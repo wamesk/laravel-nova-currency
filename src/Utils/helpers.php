@@ -4,6 +4,13 @@ use Money\Currencies\ISOCurrencies;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 
+if (!function_exists('currency')) {
+    function currency(string $currencyCode): \Wame\LaravelNovaCurrency\Models\Currency
+    {
+        return \Wame\LaravelNovaCurrency\Models\Currency::find($currencyCode);
+    }
+}
+
 if (!function_exists('currency_format')) {
     function currency_format(Money $money): string
     {

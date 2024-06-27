@@ -31,7 +31,12 @@ class Currency extends Resource
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'id';
+
+    public function title(): string
+    {
+        return $this->id . ' - ' . $this->title . ' (' . $this->symbol . ')';
+    }
 
     /**
      * The columns that should be searched.
@@ -39,7 +44,7 @@ class Currency extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'code', 'symbol', 'title',
+        'id', 'symbol', 'title',
     ];
 
     public static function indexQuery(NovaRequest $request, $query): Builder

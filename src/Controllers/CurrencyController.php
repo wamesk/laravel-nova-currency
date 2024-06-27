@@ -69,7 +69,7 @@ class CurrencyController extends Controller
      */
     public static function getListForSelect(): array
     {
-        $list = self::model()->where(['status' => CurrencyStatusEnum::ENABLED->value])->orderBy('id');
+        $list = Currency::query()->orderBy('id');
 
         $return = [];
 
@@ -92,14 +92,14 @@ class CurrencyController extends Controller
      */
     public static function displayUsing($request, $model): ?string
     {
-        if (!$model->currency_code) {
+        if (!$model->currency_id) {
             return null;
         } elseif ($request instanceof ResourceIndexRequest) {
-            return $model->currency_code;
+            return $model->currency_id;
         } else {
             $currency = $model->currency;
 
-            return $model->currency_code . ' - ' . $currency->title . ' (' . $currency->symbol . ')';
+            return $model->currency_id . ' - ' . $currency->title . ' (' . $currency->symbol . ')';
         }
     }
 
