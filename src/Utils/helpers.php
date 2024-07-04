@@ -14,10 +14,16 @@ if (!function_exists('currency')) {
 if (!function_exists('currency_format')) {
     function currency_format(Money $money): string
     {
-        $locale = currency_locale($money->getCurrency()->getCode());
+        $currencyCode = $money->getCurrency()->getCode();
+        $currency = currency($currencyCode);
+        $locale = currency_locale($currencyCode);
 
         $currencies = new ISOCurrencies();
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+        $numberFormatter->setSymbol(NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL, \Wame\LaravelNovaCurrency\Enums\ThousandsSeparatorEnum::from($currency->thousands_separator)->char());
+        $numberFormatter->setSymbol(NumberFormatter::MONETARY_SEPARATOR_SYMBOL, \Wame\LaravelNovaCurrency\Enums\DecimalSeparatorEnum::from($currency->decimal_separator)->char());
+        $numberFormatter->setSymbol(NumberFormatter::CURRENCY_SYMBOL, $currency->symbol);
+
         $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
         return $moneyFormatter->format($money);
