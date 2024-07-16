@@ -54,14 +54,15 @@ class Currency extends Model
     protected array $schema = [
         'id' => 'string',
         'title' => 'string',
-        'symbol' => 'string',
         'locale' => 'string',
+        'symbol' => 'string',
         'symbol_place' => 'string',
         'decimals' => 'integer',
         'decimal_separator' => 'string',
         'thousands_separator' => 'string',
         'basic' => 'string',
         'coefficient' => 'float',
+        'updated_at' => 'datetime'
     ];
 
     public string $fileName = 'currencies.csv';
@@ -73,7 +74,6 @@ class Currency extends Model
         }
 
         $values = array_map('str_getcsv', explode("\n", Storage::disk('local')->get($this->fileName)));
-
         $keys = array_shift($values);
 
         $data = [];

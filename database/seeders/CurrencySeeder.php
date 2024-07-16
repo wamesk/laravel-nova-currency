@@ -25,7 +25,7 @@ class CurrencySeeder extends Seeder
         $currencyModel = resolve(Currency::class);
 
         $currencies = [
-            ['id', 'title', 'locale', 'symbol', 'symbol_place', 'decimals', 'decimal_separator', 'thousands_separator', 'basic', 'coefficient'],
+            ['id', 'title', 'locale', 'symbol', 'symbol_place', 'decimals', 'decimal_separator', 'thousands_separator', 'basic', 'coefficient', 'updated_at'],
             ['id' => 'EUR', 'title' => 'Euro', 'locale' => 'de_DE', 'symbol' => '€', 'symbol_place' => '2', 'decimals' => 2, 'decimal_separator' => '1', 'thousands_separator' => '1', 'basic' => '1', 'coefficient' => 1.0],
             ['id' => 'CZK', 'title' => 'Koruna', 'locale' => 'cs_CZ', 'symbol' => 'Kč', 'symbol_place' => '2', 'decimals' => 0, 'decimal_separator' => '1', 'thousands_separator' => '1', 'basic' => '0', 'coefficient' => null],
             ['id' => 'USD', 'title' => 'Dollar', 'locale' => 'en_US', 'symbol' => '$', 'symbol_place' => '1', 'decimals' => 2, 'decimal_separator' => '2', 'thousands_separator' => '2', 'basic' => '0', 'coefficient' => null],
