@@ -39,7 +39,12 @@ class CurrencyController extends Controller
 
         $keys = array_keys($currencyModel->getSchema());
 
-        $newCurrencies = [array_merge($keys, ['updated_at'])];
+        $newCurrencies = [$keys];
+
+        if (!in_array('updated_at', $newCurrencies[0])) {
+            $newCurrencies[0][] = 'updated_at';
+        }
+
         foreach ($currencies as $currency) {
             $newCurrency = [];
             foreach ($keys as $key) {
