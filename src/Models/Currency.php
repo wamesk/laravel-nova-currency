@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Sushi\Sushi;
+use Wame\LaravelNovaCurrency\Enums\CurrencyBasicEnum;
+use Wame\LaravelNovaCurrency\Enums\CurrencyStatusEnum;
+use Wame\LaravelNovaCurrency\Enums\DecimalSeparatorEnum;
+use Wame\LaravelNovaCurrency\Enums\SymbolPlacePriceEnum;
+use Wame\LaravelNovaCurrency\Enums\ThousandsSeparatorEnum;
 
 /**
  * @property string|null $id
@@ -44,12 +49,9 @@ class Currency extends Model
     use Sushi;
     use HasUlids;
 
-    protected $guarded = ['id'];
+    public string $fileName = 'currencies.csv';
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected $guarded = ['id'];
 
     protected array $schema = [
         'id' => 'string',
@@ -65,7 +67,18 @@ class Currency extends Model
         'updated_at' => 'datetime'
     ];
 
-    public string $fileName = 'currencies.csv';
+    protected function casts(): array
+    {
+        return [
+            'basic' => CurrencyBasicEnum::class,
+            'decimal_separator' => DecimalSeparatorEnum::class,
+            'thousands_separator' => ThousandsSeparatorEnum::class,
+            'symbol_place' => SymbolPlacePriceEnum::class,
+            'status' => CurrencyStatusEnum::class,
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 
     public function getRows(): array
     {
