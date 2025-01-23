@@ -15,7 +15,6 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Nette\Utils\Strings;
-use Wame\LaravelNovaCurrency\Enums\CurrencyStatusEnum;
 
 class Currency extends Resource
 {
@@ -52,6 +51,7 @@ class Currency extends Resource
         if ($request->viaRelationship) {
             return self::relatableQuery($request, $query);
         }
+
         if (empty($request->get('orderBy'))) {
             $query->getQuery()->orders = [];
 
@@ -70,9 +70,10 @@ class Currency extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            Tabs::make(__('laravel-nova-currency::currency.detail', ['title' => $this->title ?: '']), [
+            Tab::group(null, [
                 Tab::make(__('laravel-nova-currency::currency.singular'), [
                     ID::make()
+                        ->help(__('laravel-nova-currency::currency.field.code.help'))
                         ->sortable()
                         ->rules('required')
                         ->readonly()

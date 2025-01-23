@@ -4,10 +4,13 @@ declare(strict_types = 1);
 
 namespace Wame\LaravelNovaCurrency\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use Wame\LaravelNovaCurrency\Jobs\CurrencyCoefficientUpdateJob;
+use Wame\LaravelNovaCurrency\Models\Currency;
+use Wame\LaravelNovaCurrency\Policies\CurrencyPolicy;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -42,5 +45,8 @@ class PackageServiceProvider extends ServiceProvider
 
         // Add route
         $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+
+        // Add policy
+        Gate::policy(Currency::class, CurrencyPolicy::class);
     }
 }

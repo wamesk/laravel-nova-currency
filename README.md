@@ -1,10 +1,10 @@
-# Laravel Nova 4 Currency
+# Laravel Nova 5 Currency
 
 
 
 ## Requirements
 
-- `laravel/nova: ^4.0`
+- `laravel/nova: ^5.0`
 
 
 ## Installation
@@ -19,14 +19,6 @@ php artisan migrate
 
 ```bash
 php artisan db:seed --class=CurrencySeeder
-```
-
-Add Policy to `./app/Providers/AuthServiceProvider.php`
-
-```php
-protected $policies = [
-    'Wame\LaravelNovaCurrency\Models\Currency' => 'src\Policies\CurrencyPolicy',
-];
 ```
 
 ## Usage
@@ -50,6 +42,6 @@ BelongsTo::make(__('laravel-nova-currency::customer.field.currency'), 'currency'
 
 ## Updating the exchange rates
 
-This package also includes a scheduling command to start updating the exchange rates every weekday at 16:15.
+This package also includes a scheduling command to start updating the exchange rates from [European Central Bank](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html) every weekday at 16:15.
 
 [Running The Scheduler](https://laravel.com/docs/9.x/scheduling#running-the-scheduler)
