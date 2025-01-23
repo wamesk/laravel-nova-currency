@@ -70,11 +70,6 @@ class Currency extends Model
     protected function casts(): array
     {
         return [
-            'basic' => CurrencyBasicEnum::class,
-            'decimal_separator' => DecimalSeparatorEnum::class,
-            'thousands_separator' => ThousandsSeparatorEnum::class,
-            'symbol_place' => SymbolPlacePriceEnum::class,
-            'status' => CurrencyStatusEnum::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
