@@ -7,8 +7,6 @@ namespace Wame\LaravelNovaCurrency\Nova;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use ShuvroRoy\NovaTabs\Tab;
-use ShuvroRoy\NovaTabs\Tabs;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
