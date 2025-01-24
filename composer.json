@@ -1,10 +1,11 @@
 {
     "name": "wamesk/laravel-nova-currency",
-    "description": "Laravel Nova 4 Currency field.",
+    "description": "Laravel Nova Currency field.",
+	"version": "5.0.0",
     "keywords": [
         "laravel",
         "nova",
-        "nova4",
+        "nova5",
         "currency",
         "field"
     ],
@@ -15,17 +16,11 @@
             "homepage": "https://wame.sk"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        }
-    ],
     "require": {
-        "calebporzio/sushi": "^v2.5.2",
-        "interaction-design-foundation/nova-html-card": "^3.0",
-        "laravel/nova": "^4.0",
-        "moneyphp/money": "^4.5"
+        "calebporzio/sushi": "^v2.5",
+        "interaction-design-foundation/nova-html-card": "^3.4",
+        "laravel/nova": "^5.0",
+        "moneyphp/money": "^4.6"
     },
     "autoload": {
         "psr-4": {

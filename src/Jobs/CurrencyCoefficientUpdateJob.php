@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Wame\LaravelNovaCurrency\Controllers\CurrencyController;
+use Wame\LaravelNovaCurrency\Actions\CurrencyCoefficientUpdateAction;
 
 class CurrencyCoefficientUpdateJob implements ShouldQueue
 {
@@ -25,6 +25,6 @@ class CurrencyCoefficientUpdateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        CurrencyController::currencyCoefficientUpdate(false);
+        resolve(CurrencyCoefficientUpdateAction::class)->handle();
     }
 }
