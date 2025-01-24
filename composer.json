@@ -1,6 +1,7 @@
 {
     "name": "wamesk/laravel-nova-currency",
     "description": "Laravel Nova 4 Currency field.",
+	"version": "4.0.0",
     "keywords": [
         "laravel",
         "nova",
