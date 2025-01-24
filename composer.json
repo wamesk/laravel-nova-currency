@@ -1,6 +1,7 @@
 {
     "name": "wamesk/laravel-nova-currency",
-    "description": "Laravel Nova 5 Currency field.",
+    "description": "Laravel Nova Currency field.",
+	"version": "5.0.0",
     "keywords": [
         "laravel",
         "nova",
