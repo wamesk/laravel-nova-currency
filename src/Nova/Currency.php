@@ -54,7 +54,7 @@ class Currency extends Resource
         if (empty($request->get('orderBy'))) {
             $query->getQuery()->orders = [];
 
-            return $query->orderBy('code', 'asc');
+            return $query->orderByDesc('basic')->orderBy('id');
         }
 
         return $query;
@@ -76,21 +76,24 @@ class Currency extends Resource
                         ->sortable()
                         ->rules('required')
                         ->readonly()
-                        ->showOnPreview(),
+                        ->showOnPreview()
+                        ->showWhenPeeking(),
 
                     Text::make(__('laravel-nova-currency::currency.field.symbol'), 'symbol')
                         ->help(__('laravel-nova-currency::currency.field.symbol.help'))
                         ->sortable()
                         ->filterable()
                         ->rules('required')
-                        ->showOnPreview(),
+                        ->showOnPreview()
+                        ->showWhenPeeking(),
 
                     Text::make(__('laravel-nova-currency::currency.field.title'), 'title')
                         ->help(__('laravel-nova-currency::currency.field.title.help'))
                         ->sortable()
                         ->filterable()
                         ->rules('required')
-                        ->showOnPreview(),
+                        ->showOnPreview()
+                        ->showWhenPeeking(),
 
                     Text::make(__('laravel-nova-currency::currency.field.coefficient'), 'coefficient')
                         ->help(__('laravel-nova-currency::currency.field.coefficient.help'))
