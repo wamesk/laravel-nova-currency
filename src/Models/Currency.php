@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Sushi\Sushi;
+use Wame\LaravelNovaCurrency\Database\Seeders\CurrencySeeder;
 
 /**
  * @property string|null $id
@@ -70,7 +72,10 @@ class Currency extends Model
     public function getRows(): array
     {
         if (!Storage::disk('local')->exists($this->fileName)) {
-            return [];
+            Artisan::call('db:seed', [
+                '--class' => CurrencySeeder::class,
+                '--force' => true,
+            ]);
         }
 
         $values = array_map('str_getcsv', explode("\n", Storage::disk('local')->get($this->fileName)));
