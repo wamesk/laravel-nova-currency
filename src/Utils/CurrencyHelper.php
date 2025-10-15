@@ -57,11 +57,11 @@ class CurrencyHelper
         }
 
         if ($from != 'EUR') {
-            $fromCurrency = Currency::where('code', $from)->select('coefficient')->first();
+            $fromCurrency = Currency::where('id', $from)->select('coefficient')->first();
             $price = $price / $fromCurrency->coefficient;
         }
 
-        $toCurrency = Currency::where('code', $to)->select('coefficient')->first();
+        $toCurrency = Currency::where('id', $to)->select('coefficient')->first();
 
         return $price * $toCurrency->coefficient;
     }

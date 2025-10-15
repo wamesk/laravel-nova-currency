@@ -26,14 +26,14 @@ php artisan db:seed --class=CurrencySeeder
 ```php
 Select::make(__('laravel-nova-currency::customer.field.currency'), 'currency_code')
     ->help(__('laravel-nova-currency::customer.field.currency.help'))
-    ->options(fn () => CurrencyController::getListForSelect())
+    ->options(fn () => CurrencyService::getListForSelect())
     ->searchable()
     ->required()
     ->rules('required')
     ->onlyOnForms(),
 
 BelongsTo::make(__('laravel-nova-currency::customer.field.currency'), 'currency', Currency::class)
-    ->displayUsing(fn () => CurrencyController::displayUsing($request, $this))
+    ->displayUsing(fn () => CurrencyService::displayUsing($request, $this))
     ->sortable()
     ->filterable()
     ->showOnPreview()
